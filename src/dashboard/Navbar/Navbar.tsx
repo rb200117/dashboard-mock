@@ -16,8 +16,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import AnalyticsIcon from "@mui/icons-material/Analytics";
-import ConstructionIcon from "@mui/icons-material/Construction";
+import HomeIcon from "@mui/icons-material/Home";
+import TocIcon from '@mui/icons-material/Toc';
 import PaddingIcon from "@mui/icons-material/Padding";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
@@ -71,12 +71,12 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
+
   ...theme.mixins.toolbar,
   justifyContent: "flex-end",
 }));
-const DashboardContent = () => <div>Dashboard Content</div>;
-const ProjectsContent = () => <div>Projects Content</div>;
+const HomeContent = () => <div>Home Content</div>;
+const OrdersContent = () => <div>Orders Content</div>;
 const ServicesContent = () => <div>Services Content</div>;
 const NotificationsContent = () => <div>Notifications Content</div>;
 const ChatContent = () => <div>Chat Content</div>;
@@ -84,9 +84,9 @@ const ChatContent = () => <div>Chat Content</div>;
 const contentProvider = (activeButtonName: string) => {
   switch (activeButtonName) {
     case "home":
-      return <DashboardContent />;
-    case "projects":
-      return <ProjectsContent />;
+      return <HomeContent />;
+    case "orders":
+      return <OrdersContent />;
     case "services":
       return <ServicesContent />;
     case "notifications":
@@ -94,7 +94,7 @@ const contentProvider = (activeButtonName: string) => {
     case "chatContent":
       return <ChatContent />;
     default:
-      return null; // You can return null or any other default content you want.
+      return null; 
   }
 };
 
@@ -103,7 +103,7 @@ export default function Navbar() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#EDDBC7", 
+        main: "#EDDBC7"
       },
       
     },
@@ -113,14 +113,17 @@ export default function Navbar() {
   const [activeChatsBadge, setActiveChatBadge] = React.useState(true);
   const [open, setOpen] = React.useState(true);
 
-
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+  const activeListItemTextStyle = {
+    fontFamily: "Poppins, sans-serif",
+    fontWeight: "500",
+    color: "#F86F03",
   };
 
   return (
@@ -178,34 +181,76 @@ export default function Navbar() {
           </DrawerHeader>
           <Divider />
           <List>
-            <ListItem key="dashboard" disablePadding>
-              <ListItemButton onClick={()=>{
-                setActiveButtonName('home');
-              }}>
+            <ListItem key="home" disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  setActiveButtonName("home");
+                }}
+              >
                 <ListItemIcon>
-                  <AnalyticsIcon />
+                  <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="Dashboard" />
+                <ListItemText
+                  primary={
+                    activeButtonName == "home" ? (
+                      <Typography sx={activeListItemTextStyle}>
+                        Home
+                      </Typography>
+                    ) : (
+                      <Typography sx={{ fontFamily: "Poppins, sans-serif" }}>
+                        Home
+                      </Typography>
+                    )
+                  }
+                />
               </ListItemButton>
             </ListItem>
-            <ListItem key="projects" disablePadding>
-              <ListItemButton onClick={()=>{
-                setActiveButtonName("projects");
-              }}>
+            <ListItem key="orders" disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  setActiveButtonName("orders");
+                }}
+              >
                 <ListItemIcon>
-                  <ConstructionIcon />
+                  <TocIcon />
                 </ListItemIcon>
-                <ListItemText primary="Projects" />
+                <ListItemText
+                  primary={
+                    activeButtonName == "orders" ? (
+                      <Typography sx={activeListItemTextStyle}>
+                        Orders
+                      </Typography>
+                    ) : (
+                      <Typography sx={{ fontFamily: "Poppins, sans-serif" }}>
+                        Orders
+                      </Typography>
+                    )
+                  }
+                />
               </ListItemButton>
             </ListItem>
             <ListItem key="services" disablePadding>
-              <ListItemButton onClick={() => {
-                setActiveButtonName("notifications");
-              }}>
+              <ListItemButton
+                onClick={() => {
+                  setActiveButtonName("services");
+                }}
+              >
                 <ListItemIcon>
                   <PaddingIcon />
                 </ListItemIcon>
-                <ListItemText primary="Services" />
+                <ListItemText
+                  primary={
+                    activeButtonName == "services" ? (
+                      <Typography sx={activeListItemTextStyle}>
+                        Services
+                      </Typography>
+                    ) : (
+                      <Typography sx={{ fontFamily: "Poppins, sans-serif" }}>
+                        Services
+                      </Typography>
+                    )
+                  }
+                />
               </ListItemButton>
             </ListItem>
             <ListItem key="notifications" disablePadding>
@@ -235,7 +280,19 @@ export default function Navbar() {
                     )}
                   </Box>
                 </ListItemIcon>
-                <ListItemText primary="Notifications" />
+                <ListItemText
+                  primary={
+                    activeButtonName == "notifications" ? (
+                      <Typography sx={activeListItemTextStyle}>
+                        Notifications
+                      </Typography>
+                    ) : (
+                      <Typography sx={{ fontFamily: "Poppins, sans-serif" }}>
+                        Notifications
+                      </Typography>
+                    )
+                  }
+                />
               </ListItemButton>
             </ListItem>
             <ListItem key="chat" disablePadding>
@@ -260,7 +317,17 @@ export default function Navbar() {
                     )}
                   </Box>
                 </ListItemIcon>
-                <ListItemText primary="Chat" />
+                <ListItemText
+                  primary={
+                    activeButtonName == "chatContent" ? (
+                      <Typography sx={activeListItemTextStyle}>Chat</Typography>
+                    ) : (
+                      <Typography sx={{ fontFamily: "Poppins, sans-serif" }}>
+                        Chat
+                      </Typography>
+                    )
+                  }
+                />
               </ListItemButton>
             </ListItem>
           </List>
